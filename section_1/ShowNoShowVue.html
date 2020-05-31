@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShoeNoShow</title>
+    <script src="https://unpkg.com/vue"></script>
+<meta charset="UTF-8">
+</head>
+<body>
+    <div id="app">
+        <p v-if="show">You can see me! <span>Hello!</span></p>
+        <p v-else="show">Now can see me!</p>
+        <template v-if="show">
+            <h1>Heading</h1>
+            <p>Inside a Template  </p>
+        </template>
+        
+        <p>Do you also See me?</p>
+        <button @click="show = !show">Switch</button>
+        </div>
+
+
+<script>
+new Vue({
+        el: '#app',
+        data: {
+            show: true
+        }
+						
+    });
+
+</script>
+</body>
+</html>
