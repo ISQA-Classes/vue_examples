@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue Declarative v-bind</title>
+    <script src="https://unpkg.com/vue"></script>
+<meta charset="UTF-8">
+</head>
+<body>
+    <div id="app">
+       <img v-bind:src="imageSource">        
+    </div>
+
+<script>
+   const app = new Vue ({ 
+    el: '#app',
+    
+    data: {
+        imageSource: 'https://via.placeholder.com/350x150'
+        
+        }
+    });
+
+</script>
+</body>
+</html>

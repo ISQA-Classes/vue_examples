@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue Declarative v-bind</title>
+    <script src="https://unpkg.com/vue"></script>
+<meta charset="UTF-8">
+</head>
+<body>
+    <div id="app">
+       <div v-if="isVisible">
+           Now you see me 
+       </div>
+       <div v-else>
+           Now you don't
+       </div>
+    </div>
+<script>
+   const app = new Vue ({ 
+    el: '#app',
+    
+    data: {
+        isVisible: true
+        
+        }
+    });
+</script>
+</body>
+</html> 

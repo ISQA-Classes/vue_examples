@@ -1,0 +1,13 @@
+[
+    '{{repeat(5)}}',
+    {
+      index: '{{index()}}',
+      guid: '{{guid()}}',
+      isActive: '{{bool()}}',
+      balance: '{{floating(1000, 4000, 2, "$0,0.00")}}',
+      name: '{{firstName()}} {{surname()}}',
+      email: '{{email()}}',
+      registered: '{{date(new Date(2014, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss Z")}}',
+      
+    }
+  ]
