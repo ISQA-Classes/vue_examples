@@ -1,7 +1,7 @@
 [
     '{{repeat(5)}}',
     {
-      index: '{{index()}}',
+      index: '{{index(5)}}',
       guid: '{{guid()}}',
       isActive: '{{bool()}}',
       balance: '{{floating(1000, 4000, 2, "$0,0.00")}}',
