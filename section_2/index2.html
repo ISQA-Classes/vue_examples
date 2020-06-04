@@ -14,8 +14,7 @@
 						<option value="isActive">Active user</option>
 						<option value="name">Name</option>
 						<option value="email">Email</option>
-						<option value="balance">Balance</option>
-						<option value="registered">Date registered</option>
+						
 					</select>
 				</label>
 
@@ -43,8 +42,7 @@
 					<td>
 						<a v-bind:href="'mailto:' + person.email">{{ person.email }}</a>
 					</td>
-					 <td>{{ person.balance }}</td>
-					</td>
+					<td>{{ person.balance }}</td>
 					<td>{{ formatDate(person.registered) }}</td>
 					<td v-bind:class="activeClass(person)">
 						{{ activeStatus(person) }}
@@ -75,28 +73,7 @@
 				activeClass(person) {
 					return person.isActive ? 'active' : 'inactive';
 				},
-				balanceClass(person) {
-					let balanceLevel = 'success';
-
-					if(person.balance < 2000) {
-						balanceLevel = 'error';
-					} else if (person.balance < 3000) {
-						balanceLevel = 'warning';
-					}
-
-					let increasing = false,
-					balance = person.balance / 1000;
-
-					if(Math.round(balance) == Math.ceil(balance)) {
-						increasing = 'increasing';
-					}
-
-					return [balanceLevel, increasing];
-				},
-
-				formatBalance(balance) {
-					return this.currency + balance.toFixed(2);
-				},
+				
 				formatDate(date) {
 					let registered = new Date(date);
 					return registered.toLocaleString('en-US');
@@ -114,15 +91,10 @@
 							let query = this.filterQuery,
 							field = person[this.filterField];
 
-							if(typeof field === 'number') {
-								query.replace(this.currency, '');
-								try {
-									result = eval(field + query);
-								} catch(e) {}
-							} else {
-								field = field.toLowerCase();
-								result = field.includes(query.toLowerCase());
-							}
+							
+							field = field.toLowerCase();
+							result = field.includes(query.toLowerCase());
+							
 						}
 					}
 
