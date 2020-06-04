@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<form>
+				<label for="fiterField">
+					Field:
+					<select id="filterField" >
+						<option value="">Disable filters</option>
+						<option value="isActive">Active user</option>
+						<option value="name">Name</option>
+						<option value="email">Email</option>
+						
+					</select>
+				</label>
+
+				<label for="filterQuery">
+					Query:
+					<input type="text" id="filterQuery" v-model="filterQuery">
+				</label>
+
+				<span >
+					Active:
+					<label for="userStateActive">
+						Yes:
+						<input type="radio" value="true" id="userStateActive" v-model="filterUserState">
+					</label>
+					<label for="userStateInactive">
+						No:
+						<input type="radio" value="false" id="userStateInactive" v-model="filterUserState">
+					</label>
+				</span>
+			</form>
+
+			<table>
+				<tr v-for="person in people" >
+					<td>{{ person.name }}</td>
+					<td>
+						<a v-bind:href="'mailto:' + person.email">{{ person.email }}</a>
+					</td>
+					<td>{{ person.balance }}</td>
+					<td>{{ person.registered }}</td>
+					<td v-bind:class="activeClass(person)">
+						{{ activeStatus(person) }}
+					</td>
+				</tr>
+			</table>
+
+		</div>
+		<script src="https://unpkg.com/vue"></script>
+		<script type="text/javascript">
+		const app = new Vue({
+			el: '#app',
+
+			data: {
+				people: [
+    {
+      "index": 5,
+      "guid": "7dd0c639-5fec-4947-b734-a093c8f669a8",
+      "isActive": false,
+      "balance": "$2,109.50",
+      "name": "Burnett Ballard",
+      "email": "burnettballard@dragbot.com",
+      "registered": "2018-05-07T05:46:46 +05:00"
+    },
+    {
+      "index": 6,
+      "guid": "ff50152e-be0e-499c-a067-b1b80c970dc8",
+      "isActive": false,
+      "balance": "$3,565.51",
+      "name": "Irwin Bender",
+      "email": "irwinbender@dragbot.com",
+      "registered": "2020-01-30T06:49:18 +06:00"
+    },
+    {
+      "index": 7,
+      "guid": "1d425858-7094-48fc-ba1f-0363a5e4a280",
+      "isActive": false,
+      "balance": "$1,450.62",
+      "name": "Cleo Cameron",
+      "email": "cleocameron@dragbot.com",
+      "registered": "2015-06-13T11:48:02 +05:00"
+    },
+    {
+      "index": 8,
+      "guid": "500b2bd9-615f-4dd1-92b9-06a8347e9854",
+      "isActive": false,
+      "balance": "$2,937.74",
+      "name": "Ruthie West",
+      "email": "ruthiewest@dragbot.com",
+      "registered": "2014-08-07T08:22:03 +05:00"
+    },
+    {
+      "index": 9,
+      "guid": "16f0c770-2202-44bc-9af6-a6142715cf32",
+      "isActive": true,
+      "balance": "$2,351.53",
+      "name": "Constance Palmer",
+      "email": "constancepalmer@dragbot.com",
+      "registered": "2019-12-13T05:30:40 +06:00"
+    }
+  ],
+				currency: '$',
+
+				filterField: '',
+				filterQuery: '',
+				filterUserState: ''
+			},
+			methods: {
+				activeStatus(person) {
+					return (person.isActive) ? 'Active' : 'Inactive';
+				},
+
+				
+			}
+		});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<form>
+				<label for="fiterField">
+					Field:
+					<select id="filterField" v-model="filterField">
+						<option value="">Disable filters</option>
+						<option value="isActive">Active user</option>
+						<option value="name">Name</option>
+						<option value="email">Email</option>
+						<option value="registered">Registered</option>
+						
+					</select>
+				</label>
+
+				<label for="filterQuery" v-show="this.filterField && !isActiveFilterSelected()">
+					Query:
+					<input type="text" id="filterQuery" v-model="filterQuery">
+				</label>
+
+				<span v-show="isActiveFilterSelected()">
+					Active:
+					<label for="userStateActive">
+						Yes:
+						<input type="radio" v-bind:value="true" id="userStateActive" v-model="filterUserState">
+					</label>
+					<label for="userStateInactive">
+						No:
+						<input type="radio" v-bind:value="false" id="userStateInactive" v-model="filterUserState">
+					</label>
+				</span>
+			</form>
+
+			<table>
+				<tr v-for="person in people" v-show="filterRow(person)">
+					<td>{{ person.name }}</td>
+					<td>
+						<a v-bind:href="'mailto:' + person.email">{{ person.email }}</a>
+					</td>
+					<td>{{ person.balance }}</td>
+					<td>{{ person.registered }}</td>
+					<td v-bind:class="activeClass(person)">
+						{{ activeStatus(person) }}
+					</td>
+				</tr>
+			</table>
+
+		</div>
+		<script src="https://unpkg.com/vue"></script>
+		<script type="text/javascript">
+		const app = new Vue({
+			el: '#app',
+
+			data: {
+				people: [
+  {
+    "_id": "5ed960fd323dfdfd3d5509cb",
+    "index": 0,
+    "guid": "c1e2ae3b-7d6e-4b56-ba11-c706e8e8eacc",
+    "isActive": false,
+    "balance": "$1,522.15",
+    "name": "Wilson Dodson",
+    "email": "wilsondodson@plutorque.com",
+    "registered": "2017-08-03T02:28:14 "
+  },
+  {
+    "_id": "5ed960fd5ccd36926cf50083",
+    "index": 1,
+    "guid": "db5ed897-78e3-4abf-b067-97746aeaebbe",
+    "isActive": false,
+    "balance": "$1,609.68",
+    "name": "Harrell Jones",
+    "email": "harrelljones@plutorque.com",
+    "registered": "2016-06-07T07:44:11 "
+  },
+  {
+    "_id": "5ed960fddd1f1386f38f193b",
+    "index": 2,
+    "guid": "ba2c6ada-ca02-4c95-93ce-91343a00a531",
+    "isActive": false,
+    "balance": "$1,620.70",
+    "name": "Miriam Gibbs",
+    "email": "miriamgibbs@plutorque.com",
+    "registered": "2019-02-11T09:28:59 "
+  },
+  {
+    "_id": "5ed960fd9060f41acfcf9e53",
+    "index": 3,
+    "guid": "999cbd84-be7b-4fba-bed0-d94fa2404f76",
+    "isActive": true,
+    "balance": "$1,019.87",
+    "name": "Wolf Burton",
+    "email": "wolfburton@plutorque.com",
+    "registered": "2018-02-15T01:06:33 "
+  },
+  {
+    "_id": "5ed960fd2eaeb0db7cdf6413",
+    "index": 4,
+    "guid": "10d8bfca-b3e9-4fe9-8589-e44824553ef3",
+    "isActive": true,
+    "balance": "$3,688.15",
+    "name": "Zamora Alvarado",
+    "email": "zamoraalvarado@plutorque.com",
+    "registered": "2015-04-20T12:18:36 "
+  },
+  {
+    "_id": "5ed960fdfd3bcb49010fe8bc",
+    "index": 5,
+    "guid": "f788e404-dfdf-4bd0-be82-81c3ff01b860",
+    "isActive": true,
+    "balance": "$2,879.37",
+    "name": "Dee Cooke",
+    "email": "deecooke@plutorque.com",
+    "registered": "2015-07-18T08:55:30 "
+  },
+  {
+    "_id": "5ed960fd0019493054530c3d",
+    "index": 6,
+    "guid": "6fbad83b-e82b-4fcc-9d1f-858b0255cfdc",
+    "isActive": false,
+    "balance": "$2,254.07",
+    "name": "Stein Knight",
+    "email": "steinknight@plutorque.com",
+    "registered": "2016-06-22T12:18:09 "
+  },
+  {
+    "_id": "5ed960fde5435fe8a39e54b7",
+    "index": 7,
+    "guid": "896bc968-3284-4a6c-a823-593b72a83577",
+    "isActive": false,
+    "balance": "$1,006.47",
+    "name": "Erickson Ruiz",
+    "email": "ericksonruiz@plutorque.com",
+    "registered": "2018-11-09T09:07:06 "
+  },
+  {
+    "_id": "5ed960fde2832180f6932ed1",
+    "index": 8,
+    "guid": "af21b502-3772-4e68-a831-cfbf6e68e3d5",
+    "isActive": true,
+    "balance": "$3,923.64",
+    "name": "Jones Kemp",
+    "email": "joneskemp@plutorque.com",
+    "registered": "2015-07-14T04:41:29 "
+  },
+  {
+    "_id": "5ed960fdb2c0a15034c6a2c0",
+    "index": 9,
+    "guid": "4158b83c-3764-433b-bff7-0303d200aeb9",
+    "isActive": false,
+    "balance": "$1,536.23",
+    "name": "Riddle Abbott",
+    "email": "riddleabbott@plutorque.com",
+    "registered": "2017-05-19T02:47:46 "
+  },
+  {
+    "_id": "5ed960fd6f0d4002a79aa473",
+    "index": 10,
+    "guid": "7584e89d-9800-4657-a243-9c102646e043",
+    "isActive": true,
+    "balance": "$3,371.24",
+    "name": "Anne Browning",
+    "email": "annebrowning@plutorque.com",
+    "registered": "2019-11-15T08:05:08 "
+  },
+  {
+    "_id": "5ed960fd9ace793a8a3b9db9",
+    "index": 11,
+    "guid": "65eda94a-567a-49fe-ad7f-3bab712eb2ad",
+    "isActive": true,
+    "balance": "$2,779.01",
+    "name": "Ramos Marks",
+    "email": "ramosmarks@plutorque.com",
+    "registered": "2019-12-31T03:37:29 "
+  },
+  {
+    "_id": "5ed960fd984c2c8702b3cf0c",
+    "index": 12,
+    "guid": "e09103bd-9470-40a0-8646-7093a0684cd6",
+    "isActive": false,
+    "balance": "$3,273.55",
+    "name": "Cook Hahn",
+    "email": "cookhahn@plutorque.com",
+    "registered": "2015-06-10T10:41:34 "
+  },
+  {
+    "_id": "5ed960fdf927a80d4c2e25a7",
+    "index": 13,
+    "guid": "249ddb4f-8695-439f-b768-75e42f79b8f6",
+    "isActive": false,
+    "balance": "$2,086.04",
+    "name": "Tamika Wilkinson",
+    "email": "tamikawilkinson@plutorque.com",
+    "registered": "2017-03-26T06:18:55 "
+  },
+  {
+    "_id": "5ed960fd672d31a9476f62c6",
+    "index": 14,
+    "guid": "16b26097-1c71-4edd-a381-57b9b165c968",
+    "isActive": true,
+    "balance": "$3,653.05",
+    "name": "Judith Tanner",
+    "email": "judithtanner@plutorque.com",
+    "registered": "2019-10-15T10:33:07 "
+  },
+  {
+    "_id": "5ed960fd19c196e2766008ba",
+    "index": 15,
+    "guid": "3c714c4f-ef0a-48b8-9948-dd3e9f6ea7ea",
+    "isActive": true,
+    "balance": "$2,758.50",
+    "name": "Levine Donaldson",
+    "email": "levinedonaldson@plutorque.com",
+    "registered": "2014-10-26T11:21:19 "
+  },
+  {
+    "_id": "5ed960fd0273ac66ddec7568",
+    "index": 16,
+    "guid": "ae321754-7913-4428-861c-96b543870b95",
+    "isActive": false,
+    "balance": "$2,818.02",
+    "name": "Clayton Potter",
+    "email": "claytonpotter@plutorque.com",
+    "registered": "2016-09-21T09:09:50 "
+  },
+  {
+    "_id": "5ed960fd6e16733d84fc665f",
+    "index": 17,
+    "guid": "c5ffd467-b3a8-4238-ab03-8cde727abee5",
+    "isActive": true,
+    "balance": "$3,349.66",
+    "name": "Bass Osborne",
+    "email": "bassosborne@plutorque.com",
+    "registered": "2019-01-15T01:03:59 "
+  },
+  {
+    "_id": "5ed960fd8c36cbddbbadfb96",
+    "index": 18,
+    "guid": "a993befe-2760-41d0-af34-f6430cbe4640",
+    "isActive": false,
+    "balance": "$1,273.54",
+    "name": "Norton Collins",
+    "email": "nortoncollins@plutorque.com",
+    "registered": "2019-09-12T09:51:49 "
+  },
+  {
+    "_id": "5ed960fdebea843acd207a2e",
+    "index": 19,
+    "guid": "b26bdc0a-8769-4bf3-8463-546af9cd7d0a",
+    "isActive": false,
+    "balance": "$3,982.39",
+    "name": "Letitia Haney",
+    "email": "letitiahaney@plutorque.com",
+    "registered": "2016-05-30T01:57:47 "
+  }
+], 
+
+				currency: '$',
+
+				filterField: '',
+				filterQuery: '',
+				filterUserState: ''
+			},
+			methods: {
+				activeStatus(person) {
+					return (person.isActive) ? 'Active' : 'Inactive';
+				},
+
+				activeClass(person) {
+					return person.isActive ? 'active' : 'inactive';
+				},
+				filterRow(person) {
+					let result = true;
+					if(this.filterField) {
+
+						if(this.filterField === 'isActive') {
+    						result = (typeof this.filterUserState === 'boolean') ? (this.filterUserState === person.isActive) : true;
+  						} else {
+							let query = this.filterQuery,
+							field = person[this.filterField];
+
+							
+							field = field.toLowerCase();
+							result = field.includes(query.toLowerCase());
+					    }
+					}
+					return result;
+				},
+
+				isActiveFilterSelected() {
+					return (this.filterField === 'isActive');
+				}
+			}
+		});
+		</script>
+	</body>
+</html>
